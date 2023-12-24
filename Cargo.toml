@@ -8,4 +8,5 @@ authors = ["RAprogramm <andrey.rozanov.vl@gmail.com>"]
 
 [dependencies]
 regex = "1"
-clap = { version = "4.4.11", features = ["derive"] }
+clap = { version = "4", features = ["derive"] }
+colored = "2"

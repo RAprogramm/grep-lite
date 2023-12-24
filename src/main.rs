@@ -1,4 +1,5 @@
 use clap::Parser;
+use colored::Colorize;
 use regex::Regex;
 use std::fs::File;
 use std::io;
@@ -9,7 +10,18 @@ fn process_lines<T: BufRead + Sized>(reader: T, re: Regex) {
     for line_ in reader.lines() {
         let line = line_.unwrap();
         match re.find(&line) {
-            Some(_) => println!("{}", line),
+            Some(mat) => {
+                let start = mat.start();
+                let end = mat.end();
+
+                let before_match = &line[..start];
+                let match_pattern = &line[start..end];
+                let after_match = &line[end..];
+
+                print!("{}", before_match);
+                print!("{}", match_pattern.red());
+                println!("{}",after_match);
+            },
             None => (),
         }
     }
