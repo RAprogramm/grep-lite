@@ -7,6 +7,7 @@ use std::io::prelude::*;
 use std::io::BufReader;
 
 fn process_lines<T: BufRead + Sized>(reader: T, re: Regex) {
+    let mut line_number = 1;
     for line_ in reader.lines() {
         let line = line_.unwrap();
         match re.find(&line) {
@@ -18,12 +19,14 @@ fn process_lines<T: BufRead + Sized>(reader: T, re: Regex) {
                 let match_pattern = &line[start..end];
                 let after_match = &line[end..];
 
+                print!("{}: ", line_number);
                 print!("{}", before_match);
                 print!("{}", match_pattern.red());
-                println!("{}",after_match);
-            },
+                println!("{}", after_match);
+            }
             None => (),
         }
+        line_number += 1;
     }
 }
 
